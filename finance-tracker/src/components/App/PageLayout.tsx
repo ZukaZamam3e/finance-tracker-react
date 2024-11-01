@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/material";
 import { ReactNode, useEffect } from "react";
-import { NavigationBar } from "./Navigationbar";
+import { NavigationBar } from "./NavigationBar";
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -14,9 +14,17 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
       <Container
         className="app_container"
         component="main"
-        sx={{ paddingLeft: "10px", paddingRight: "10px", paddingTop: "10px" }}
+        sx={{ paddingLeft: "5px", paddingRight: "5px", paddingTop: "10px" }}
       >
-        {children}
+        <Box
+          sx={{
+            display: "flex",
+            marginTop: 3,
+            justifyContent: "center",
+          }}
+        >
+          {children}
+        </Box>
       </Container>
     </Box>
   );
