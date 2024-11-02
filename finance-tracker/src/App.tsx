@@ -9,6 +9,8 @@ import { CssBaseline } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { PageLayout } from "./components/App/PageLayout";
 import { Pages } from "./components/App/Pages";
+import store from "./store";
+import { Provider } from "react-redux";
 
 const darkTheme = createTheme({
   palette: {
@@ -44,33 +46,34 @@ const darkTheme = createTheme({
         },
       },
     },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          borderWidth: "3px !important",
-          borderStyle: "solid !important",
-          borderColor: "#3a3a3c !important",
-        },
-      },
-    },
+    // MuiCard: {
+    //   styleOverrides: {
+    //     root: {
+    //       borderStyle: "solid !important",
+    //       borderColor: "#3a3a3c !important",
+    //     },
+    //   },
+    // },
   },
 });
 
 const App = () => {
   return (
     <HeadProvider>
-      <Meta name="viewport" content="initial-scale=1, width=device-width" />
-      <div className="App">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
+      <Provider store={store}>
+        <Meta name="viewport" content="initial-scale=1, width=device-width" />
+        <div className="App">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <ThemeProvider theme={darkTheme}>
+              <CssBaseline />
 
-            <PageLayout>
-              <Pages />
-            </PageLayout>
-          </ThemeProvider>
-        </LocalizationProvider>
-      </div>
+              <PageLayout>
+                <Pages />
+              </PageLayout>
+            </ThemeProvider>
+          </LocalizationProvider>
+        </div>
+      </Provider>
     </HeadProvider>
   );
 };

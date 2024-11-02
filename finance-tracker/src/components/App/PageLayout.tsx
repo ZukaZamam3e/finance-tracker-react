@@ -14,6 +14,7 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
       <Container
         className="app_container"
         component="main"
+        maxWidth="xl"
         sx={{ paddingLeft: "5px", paddingRight: "5px", paddingTop: "10px" }}
       >
         <Box
