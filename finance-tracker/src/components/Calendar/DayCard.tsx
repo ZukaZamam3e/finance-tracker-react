@@ -17,7 +17,7 @@ export const DayCard = (props: DayCardProps) => {
   const sxDay = {
     display: "flex",
     flexDirection: "column",
-    height: { xs: "11vh", sm: "12vh" },
+    height: { xs: "11vh", sm: "11vh" },
     ...sxBorder,
   };
 
@@ -36,9 +36,9 @@ export const DayCard = (props: DayCardProps) => {
 
   const sxFontSize = {
     fontSize: {
-      xs: ".7rem",
-      sm: "16px",
-      md: "20px",
+      xs: "2.5vw",
+      sm: ".87vw",
+      // md: "20px",
     },
   };
 
@@ -47,8 +47,8 @@ export const DayCard = (props: DayCardProps) => {
     pr: 0.5,
     fontWeight: "bolder",
     fontSize: {
-      xs: ".85rem",
-      sm: "24px",
+      xs: "3.5vw",
+      sm: "1.2vw",
     },
   };
   return (

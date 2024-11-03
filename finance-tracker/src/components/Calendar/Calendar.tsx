@@ -3,6 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ListIcon from "@mui/icons-material/List";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import { DayCard } from "./DayCard";
 import { useState } from "react";
 import { Day } from "./Day";
@@ -19,24 +20,32 @@ export const Calendar = () => {
   const header_grid = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-    columnGap: "10px",
-    rowGap: "10px",
+    columnGap: "5px",
+    rowGap: "5px",
   };
 
   const days_grid = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-    columnGap: { xs: "0px", md: "10px" },
-    rowGap: { xs: "0px", md: "10px" },
-    paddingTop: "10px",
+    columnGap: { xs: "0px", md: "5px" },
+    rowGap: { xs: "0px", md: "5px" },
+    paddingTop: "5px",
+  };
+
+  const total_grid = {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+    columnGap: "5px",
+    rowGap: "5px",
+    paddingTop: "5px",
   };
 
   const footer_grid = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr",
-    columnGap: "10px",
-    rowGap: "10px",
-    paddingTop: "10px",
+    columnGap: "5px",
+    rowGap: "5px",
+    paddingTop: "5px",
   };
 
   const handleSelectDate = (date: Date) => {
@@ -52,7 +61,7 @@ export const Calendar = () => {
   );
 
   const body = (
-    <div style={sxBody}>
+    <Box style={sxBody}>
       <div style={header_grid}>
         <CalendarNav />
       </div>
@@ -60,12 +69,14 @@ export const Calendar = () => {
         <DaysOfWeek />
         <Days onSelectDate={handleSelectDate} />
       </Box>
-      <div style={footer_grid}>
-        <ManageAccount />
+      <Box sx={total_grid}>
         <IncomeExpense />
+      </Box>
+      <Box sx={footer_grid}>
+        <ManageAccount />
         <BackwardForward />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 
   return (
@@ -213,12 +224,27 @@ export const IncomeExpense = () => {
     alignItems: "center",
   };
   const sxBorder = { border: "3px solid rgb(58, 58, 60)" };
-  const sxIncome = { gridColumn: "span 2", ...sxBorder, ...sxHeight };
-  const sxExpense = { gridColumn: "span 2", ...sxBorder, ...sxHeight };
+  const sxUpdateCurrent = { gridColumn: "span 3", ...sxBorder, ...sxHeight };
+
+  const sxIncome = {
+    gridColumn: "span 2",
+    ...sxBorder,
+    ...sxHeight,
+    color: "lightgreen",
+  };
+  const sxExpense = {
+    gridColumn: "span 2",
+    ...sxBorder,
+    ...sxHeight,
+    color: "#ff9c46",
+  };
   return (
     <>
-      <Paper sx={sxIncome}>Income</Paper>
-      <Paper sx={sxExpense}>Expense</Paper>
+      <Paper sx={sxIncome}>999,999</Paper>
+      <Button sx={sxUpdateCurrent}>
+        <PriceChangeIcon />
+      </Button>
+      <Paper sx={sxExpense}>$(999,999)</Paper>
     </>
   );
 };
