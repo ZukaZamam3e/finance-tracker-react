@@ -5,6 +5,7 @@ import ListIcon from "@mui/icons-material/List";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { DayCard } from "./DayCard";
 import { useState } from "react";
+import { Day } from "./Day";
 
 export const Calendar = () => {
   const showAccounts = false;
@@ -39,11 +40,16 @@ export const Calendar = () => {
   };
 
   const handleSelectDate = (date: Date) => {
-    console.log(date);
     setSelectedDate(date);
   };
 
-  const selectedDay = selectedDate != null && selectedDate.toLocaleDateString();
+  const handleCancelDate = () => {
+    setSelectedDate(null);
+  };
+
+  const selectedDay = selectedDate != null && (
+    <Day date={selectedDate} onCancelDate={handleCancelDate} />
+  );
 
   const body = (
     <div style={sxBody}>
