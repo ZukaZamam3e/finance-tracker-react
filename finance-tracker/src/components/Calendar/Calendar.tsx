@@ -101,9 +101,10 @@ export const CalendarNav = () => {
     ...sxHeight,
     ...sxBorder,
     fontSize: {
-      xs: ".7rem",
-      sm: ".85rem",
-      lg: "20px",
+      xs: ".8rem",
+      sm: "1rem",
+      md: ".9rem",
+      lg: "1rem",
     },
     gridColumn: {
       xs: "span 2",
@@ -130,7 +131,7 @@ export const CalendarNav = () => {
       md: "span 1",
     },
     fontWeight: "bolder",
-    fontSize: "24px",
+    fontSize: "1.5rem",
     ...sxHeight,
     ...sxBorder,
   };
@@ -141,7 +142,7 @@ export const CalendarNav = () => {
       <Button sx={sxBackwardForward}>
         <ArrowBackIcon />
       </Button>
-      <Paper sx={sxMonthYear}>11/2024</Paper>
+      <Paper sx={sxMonthYear}>Nov 2024</Paper>
       <Button sx={sxBackwardForward}>
         <ArrowForwardIcon />
       </Button>
@@ -159,7 +160,7 @@ export const DaysOfWeek = () => {
     mt: "-1px",
     fontSize: {
       xs: ".85rem",
-      sm: "24px",
+      sm: "1.2rem",
     },
   };
 

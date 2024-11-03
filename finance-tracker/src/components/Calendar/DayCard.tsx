@@ -17,7 +17,7 @@ export const DayCard = (props: DayCardProps) => {
   const sxDay = {
     display: "flex",
     flexDirection: "column",
-    height: { xs: "11vh", sm: "11vh" },
+    height: { xs: "10.5vh", sm: "125px" },
     ...sxBorder,
   };
 
@@ -32,13 +32,18 @@ export const DayCard = (props: DayCardProps) => {
     pr: 0.5,
     mt: "auto",
     fontWeight: "bolder",
+    fontSize: {
+      xs: ".7rem;",
+      sm: ".9rem",
+      md: "1.1rem",
+    },
   };
 
   const sxFontSize = {
     fontSize: {
-      xs: "2.5vw",
-      sm: ".87vw",
-      // md: "20px",
+      xs: ".7rem",
+      sm: ".9rem",
+      md: "1rem",
     },
   };
 
@@ -47,8 +52,9 @@ export const DayCard = (props: DayCardProps) => {
     pr: 0.5,
     fontWeight: "bolder",
     fontSize: {
-      xs: "3.5vw",
-      sm: "1.2vw",
+      xs: "1rem",
+      sm: "1rem",
+      md: "1.1rem",
     },
   };
   return (
@@ -67,9 +73,7 @@ export const DayCard = (props: DayCardProps) => {
       <Box sx={{ ...sxIncomeExpense, ...sxFontSize, color: "#ff9c46" }}>
         ($999,999)
       </Box>
-      <Box sx={{ ...sxTotal, ...sxFontSize, color: "lightgreen" }}>
-        $999,999
-      </Box>
+      <Box sx={{ ...sxTotal, color: "lightgreen" }}>($999,999)</Box>
     </Card>
   );
 };
