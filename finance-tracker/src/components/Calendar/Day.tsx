@@ -59,7 +59,7 @@ export const Day = (props: DayProps) => {
           </Fab>
         </>
       )}
-      {props.date.toLocaleDateString()}
+      {new Date(props.date).toLocaleDateString()}
     </div>
   );
 
