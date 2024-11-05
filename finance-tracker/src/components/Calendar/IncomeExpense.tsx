@@ -5,6 +5,7 @@ import { formatCurrency } from "../../models/DayModel";
 interface IncomeExpenseProps {
   income: number;
   expenses: number;
+  onHardsetClick: () => void;
 }
 
 export const IncomeExpense = (props: IncomeExpenseProps) => {
@@ -32,7 +33,7 @@ export const IncomeExpense = (props: IncomeExpenseProps) => {
   return (
     <>
       <Paper sx={sxIncome}>{formatCurrency(props.income)}</Paper>
-      <Button sx={sxUpdateCurrent}>
+      <Button sx={sxUpdateCurrent} onClick={props.onHardsetClick}>
         <PriceChangeIcon />
       </Button>
       <Paper sx={sxExpense}>{formatCurrency(props.expenses)}</Paper>

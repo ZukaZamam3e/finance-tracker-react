@@ -72,10 +72,10 @@ export const CalendarHeader = (props: CalendarHeaderProps) => {
       <Button sx={sxBackwardForward} onClick={props.onForward}>
         <ArrowForwardIcon />
       </Button>
-      <Button sx={sxCurrentLow}>
+      <Paper sx={sxCurrentLow}>
         {new Date(props.lowestDay.date).getDate()}:{" "}
         {formatCurrency(props.lowestDay.total)}
-      </Button>
+      </Paper>
     </>
   );
 };

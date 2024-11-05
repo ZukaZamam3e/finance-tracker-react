@@ -1,8 +1,33 @@
-import { Button, Paper } from "@mui/material";
+import {
+  Button,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import ListIcon from "@mui/icons-material/List";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { AccountModel } from "../../models/AccountModel";
+import { useEffect, useState } from "react";
 
-export const ManageAccount = () => {
+interface ManageAccountProps {
+  accounts: AccountModel[];
+  accountId: number;
+  onAccountClick: () => void;
+  onAccountChange: (accountId: number) => void;
+}
+
+export const ManageAccount = (props: ManageAccountProps) => {
+  const [accountId, setAccountId] = useState<any>(props.accountId);
+
+  useEffect(() => {
+    setAccountId(props.accountId);
+  }, [props.accountId]);
+
+  const handleAccountChange = (event: SelectChangeEvent) => {
+    props.onAccountChange(parseInt(event.target.value));
+  };
+
   const sxHeight = {
     height: "40px",
     display: "flex",
@@ -15,8 +40,20 @@ export const ManageAccount = () => {
   const sxMonthView = { gridColumn: "span 1", ...sxBorder, ...sxHeight };
   return (
     <>
-      <Paper sx={sxAccounts}>Accounts</Paper>
-      <Button sx={sxAccountList}>
+      <Select
+        sx={sxAccounts}
+        value={accountId}
+        displayEmpty
+        onChange={handleAccountChange}
+      >
+        <MenuItem value="0">Select Account</MenuItem>
+        {props.accounts.map((item) => (
+          <MenuItem key={item.accountId} value={item.accountId}>
+            {item.accountName}
+          </MenuItem>
+        ))}
+      </Select>
+      <Button sx={sxAccountList} onClick={props.onAccountClick}>
         <ListIcon />
       </Button>
       <Button sx={sxMonthView}>

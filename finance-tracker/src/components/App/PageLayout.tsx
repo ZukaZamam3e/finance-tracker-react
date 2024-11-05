@@ -1,7 +1,10 @@
 import { Box, Container } from "@mui/material";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { NavigationBar } from "./NavigationBar";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Loading } from "./Loading";
+import { ErrorMessage } from "./ErrorMessage";
+import { PopUpNotification } from "./PopUpNotification";
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -40,6 +43,9 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
             </div>
           )}
         </Box>
+        <Loading />
+        <ErrorMessage />
+        <PopUpNotification />
       </Container>
     </Box>
   );

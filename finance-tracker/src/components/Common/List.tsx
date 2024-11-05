@@ -14,6 +14,7 @@ interface ListProps {
   clearSearch?: boolean;
   hideSearch?: boolean;
   hidePagination?: boolean;
+  paddingBottom?: boolean;
 }
 
 export const List = (props: ListProps) => {
@@ -23,6 +24,7 @@ export const List = (props: ListProps) => {
   const [searchText, setSearchText] = useState("");
   const [searchTimer, setSearchTimer] = useState<any>(null);
   const isMobile = useSelector((state: any) => state.isMobile.value);
+  const paddingBottom = props.paddingBottom ?? true;
   let pages = props.count && Math.floor(props.count / props.take);
   if (props.count % props.take >= 1) {
     pages += 1;
@@ -90,7 +92,9 @@ export const List = (props: ListProps) => {
     <>
       <Box
         sx={{
-          width: "90vw",
+          width: "100vw",
+          pr: "15px",
+          pl: "15px",
         }}
       >
         <Box
@@ -98,12 +102,14 @@ export const List = (props: ListProps) => {
             display: "grid",
             columnGap: "10px",
             rowGap: "10px",
-            paddingBottom: {
-              xs: "185px",
-              sm: "185px",
-              md: "52px",
-              lg: "52px",
-            },
+            paddingBottom: paddingBottom
+              ? {
+                  xs: "185px",
+                  sm: "185px",
+                  md: "52px",
+                  lg: "52px",
+                }
+              : "52px",
             gridTemplateColumns: {
               xs: "1fr",
               sm: "1fr 1fr",

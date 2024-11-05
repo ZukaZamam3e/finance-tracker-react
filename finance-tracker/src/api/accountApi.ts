@@ -1,14 +1,20 @@
 import { protectedResources } from "../config/apiConfig";
 import { useFetch } from "../hooks/useFetchOAProjectsAPI";
 import { AccountModel } from "../models/AccountModel";
-import { GetAccountResponse } from "../models/responses/GetAccountResponse";
-import { LoadAccountResponse } from "../models/responses/LoadAccountResponse";
+import {
+  defaultGetAccountResponse,
+  GetAccountResponse,
+} from "../models/responses/GetAccountResponse";
+import {
+  defaultLoadAccountResponse,
+  LoadAccountResponse,
+} from "../models/responses/LoadAccountResponse";
 
 export const accountApi = () => {
   const { getData, postData } = useFetch();
 
   const loadAccounts = async (take: number) => {
-    let response: LoadAccountResponse | null = null;
+    let response: LoadAccountResponse = defaultLoadAccountResponse();
 
     await getData(
       `${protectedResources.oaprojectsApi.accountEndpoint}/load?take=${take}`
@@ -24,7 +30,7 @@ export const accountApi = () => {
   };
 
   const getAccounts = async (page: number, take: number, search: string) => {
-    let response: GetAccountResponse | null = null;
+    let response: GetAccountResponse = defaultGetAccountResponse();
     const offset = page * take;
 
     await getData(

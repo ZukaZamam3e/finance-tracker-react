@@ -1,12 +1,14 @@
 import { Box, Card } from "@mui/material";
-import { DayModel, formatCurrency, formatter } from "../../models/DayModel";
+import { DayModel, formatCurrency } from "../../models/DayModel";
 
 interface DayCardProps {
   day: DayModel;
-  onSelectDate: (date: Date) => void;
+  onSelectDay?: (day: DayModel) => void;
+  largeView?: boolean;
 }
 
 export const DayCard = (props: DayCardProps) => {
+  const largeView = props.largeView ?? false;
   const today = new Date();
   const month = new Date(props.day.date).getMonth();
   const day = new Date(props.day.date).getDate();
@@ -17,8 +19,8 @@ export const DayCard = (props: DayCardProps) => {
   const currentYear = today.getFullYear() == year;
 
   const sxBorder = {
-    borderWidth: { xs: "1px", md: "3px" },
-    borderRadius: { xs: "1px", md: "3px" },
+    borderWidth: { xs: !largeView ? "1px" : "3px", md: "3px" },
+    borderRadius: { xs: !largeView ? "1px" : "3px", md: "3px" },
   };
 
   const sxNonMonthDayBorder = {
@@ -43,7 +45,8 @@ export const DayCard = (props: DayCardProps) => {
   const sxDay = {
     display: "flex",
     flexDirection: "column",
-    height: { xs: "10.5vh", sm: "125px" },
+    height: { xs: !largeView ? "10.5vh" : "125px", sm: "125px" },
+    // width: !largeView ? "initial" : "125px",
     ...sxBorder,
   };
 
@@ -59,16 +62,16 @@ export const DayCard = (props: DayCardProps) => {
     mt: "auto",
     fontWeight: "bolder",
     fontSize: {
-      xs: ".7rem;",
-      sm: ".9rem",
+      xs: !largeView ? ".7rem" : "1rem",
+      sm: !largeView ? ".9rem" : "1rem",
       md: "1.1rem",
     },
   };
 
   const sxFontSize = {
     fontSize: {
-      xs: ".65rem",
-      sm: ".9rem",
+      xs: !largeView ? ".65rem" : "1rem",
+      sm: !largeView ? ".9rem" : "1rem",
       md: "1rem",
     },
   };
@@ -78,16 +81,19 @@ export const DayCard = (props: DayCardProps) => {
     pr: 0.5,
     fontWeight: "bolder",
     fontSize: {
-      xs: "1rem",
-      sm: "1rem",
+      xs: !largeView ? "1rem" : "1.1rem",
       md: "1.1rem",
     },
   };
+
+  const handleSelectDay = () => {
+    if (!!props.onSelectDay) {
+      props.onSelectDay(props.day);
+    }
+  };
+
   return (
-    <Card
-      sx={{ ...sxDay, ...sxDayBorder }}
-      onClick={() => props.onSelectDate(props.day.date)}
-    >
+    <Card sx={{ ...sxDay, ...sxDayBorder }} onClick={handleSelectDay}>
       <Box sx={{ ...sxDate }}>
         {month + 1}/{day}
       </Box>
@@ -108,7 +114,17 @@ export const DayCard = (props: DayCardProps) => {
           {formatCurrency(props.day.expenses)}
         </Box>
       )}
-      <Box sx={{ ...sxTotal, color: "lightgreen" }}>
+      <Box
+        sx={{
+          ...sxTotal,
+          color:
+            props.day.total > 500
+              ? "lightgreen"
+              : props.day.total < 0
+                ? "red"
+                : "yellow",
+        }}
+      >
         {formatCurrency(props.day.total)}
       </Box>
     </Card>

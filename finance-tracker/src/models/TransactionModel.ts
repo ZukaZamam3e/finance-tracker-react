@@ -6,8 +6,8 @@ export interface TransactionModel {
   endDate?: Date;
   amount: number;
   name: string;
-  frenquencyTypeId: number;
-  frenquencyTypeIdZ?: string;
+  frequencyTypeId: number;
+  frequencyTypeIdZ?: string;
   transactionNotes?: string;
   transactionUrl?: string;
   interval?: number;

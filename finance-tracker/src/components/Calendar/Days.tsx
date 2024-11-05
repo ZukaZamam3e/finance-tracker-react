@@ -3,7 +3,7 @@ import { DayCard } from "./DayCard";
 
 interface DaysProps {
   days: DayModel[];
-  onSelectDate: (date: Date) => void;
+  onSelectDay: (day: DayModel) => void;
 }
 
 export const Days = (props: DaysProps) => {
@@ -16,6 +16,6 @@ export const Days = (props: DaysProps) => {
   }
 
   return props.days.map((day) => (
-    <DayCard key={day.dateZ} day={day} onSelectDate={props.onSelectDate} />
+    <DayCard key={day.dateZ} day={day} onSelectDay={props.onSelectDay} />
   ));
 };
