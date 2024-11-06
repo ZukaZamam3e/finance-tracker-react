@@ -4,8 +4,12 @@ import { FabAddCancel } from "../Common/FabAddCancel";
 import { DayModel } from "../../models/DayModel";
 import { DayCard } from "./DayCard";
 import { List } from "../Common/List";
-import { TransactionModel } from "../../models/TransactionModel";
+import {
+  defaultTransaction,
+  TransactionModel,
+} from "../../models/TransactionModel";
 import { TransactionCard } from "./TransactionCard";
+import { EditTransaction } from "./EditTransaction";
 
 interface DayProps {
   day: DayModel;
@@ -17,17 +21,24 @@ export const Day = (props: DayProps) => {
   const [hideAddButton, setHideAddButton] = useState(false);
   const [editing, setEditing] = useState({
     show: false,
-    editingTransaction: () => {},
-  });
-  const [creating, setCreating] = useState({
-    show: false,
-    creatingTransaction: () => {},
+    editingTransaction: defaultTransaction(),
   });
   const take = 18;
 
-  const handleAddNew = () => {
-    // let newSub: WhatsNextSubModel = () => {};
-    // setCreating({ show: true, creatingTransaction: () => {} });
+  const handleAddNewTransaction = () => {
+    setEditing({ show: true, editingTransaction: defaultTransaction() });
+  };
+
+  const handleSelectTransaction = (transaction: TransactionModel) => {
+    setEditing({ show: true, editingTransaction: transaction });
+  };
+
+  const handleTransactionSave = () => {};
+
+  const handleDeleteTransaction = () => {};
+
+  const handleCancelTransactionEdit = () => {
+    setEditing({ show: false, editingTransaction: defaultTransaction() });
   };
 
   const hardset = props.day.transactions.filter(
@@ -36,10 +47,15 @@ export const Day = (props: DayProps) => {
   const income = props.day.transactions.filter(
     (m) => m.amount > 0 && m.frequencyTypeId != 1000
   );
+
   const expenses = props.day.transactions.filter((m) => m.amount < 0);
 
+  const sxBody = {
+    display: !editing.show ? "initial" : "none",
+  };
+
   const sxDayRow = {
-    display: !editing.show && !creating.show ? "grid" : "none",
+    display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
     columnGap: "5px",
     rowGap: "5px",
@@ -53,8 +69,16 @@ export const Day = (props: DayProps) => {
     gridColumn: { xs: "span 3", sm: "span 1" },
   };
 
+  const editTransactionView = editing.show && (
+    <EditTransaction
+      transaction={editing.editingTransaction}
+      onCancelEditTransaction={handleCancelTransactionEdit}
+      onTransactionSave={handleTransactionSave}
+    />
+  );
+
   const body = (
-    <>
+    <div style={sxBody}>
       <div style={sxDayRow}>
         <Box sx={sxFiller} />
         <Box sx={sxDay}>
@@ -74,7 +98,11 @@ export const Day = (props: DayProps) => {
               paddingBottom={false}
             >
               {hardset.map((transaction: TransactionModel) => (
-                <TransactionCard transaction={transaction} />
+                <TransactionCard
+                  transaction={transaction}
+                  onSelectTransaction={handleSelectTransaction}
+                  onDeleteTransaction={handleDeleteTransaction}
+                />
               ))}
             </List>
             <hr />
@@ -91,7 +119,11 @@ export const Day = (props: DayProps) => {
               paddingBottom={false}
             >
               {income.map((transaction: TransactionModel) => (
-                <TransactionCard transaction={transaction} />
+                <TransactionCard
+                  transaction={transaction}
+                  onSelectTransaction={handleSelectTransaction}
+                  onDeleteTransaction={handleDeleteTransaction}
+                />
               ))}
             </List>
             <hr />
@@ -107,7 +139,11 @@ export const Day = (props: DayProps) => {
               take={take}
             >
               {expenses.map((transaction: TransactionModel) => (
-                <TransactionCard transaction={transaction} />
+                <TransactionCard
+                  transaction={transaction}
+                  onSelectTransaction={handleSelectTransaction}
+                  onDeleteTransaction={handleDeleteTransaction}
+                />
               ))}
             </List>
             <hr />
@@ -116,12 +152,17 @@ export const Day = (props: DayProps) => {
       </div>
       {!hideAddButton && (
         <FabAddCancel
-          onAddClick={handleAddNew}
+          onAddClick={handleAddNewTransaction}
           onCancelClick={props.onCancelDay}
         />
       )}
-    </>
+    </div>
   );
 
-  return <>{body}</>;
+  return (
+    <>
+      {body}
+      {editTransactionView}
+    </>
+  );
 };

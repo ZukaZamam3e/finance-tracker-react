@@ -1,31 +1,29 @@
-import { Link, Typography } from "@mui/material";
+import { Link, Stack, Typography } from "@mui/material";
 import { TransactionModel } from "../../models/TransactionModel";
 import { FTCard } from "../Common/FTCard";
 import { FTGrid } from "../Common/FTGrid";
-import { FTGridItem } from "../Common/FTGridItem";
-import { ReactNode } from "react";
+import Grid from "@mui/material/Grid2";
 import { formatCurrency } from "../../models/DayModel";
 import { FTTypography } from "../Common/FTTypography";
+import { FTIconButton } from "../Common/FTIconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface TransactionCardProps {
   transaction: TransactionModel;
+  onSelectTransaction: (transaction: TransactionModel) => void;
+  onDeleteTransaction: (transactionId: number) => void;
 }
 
 export const TransactionCard = (props: TransactionCardProps) => {
   return (
     <FTCard>
       <FTGrid>
-        <FTGridItem
-          size={{ xs: 12 }}
+        <Grid
+          size={{ xs: 6, sm: 12 }}
           sx={{
             minHeight: {
-              xs: 85,
-              sm: 100,
-            },
-            p: 1,
-            mt: {
-              xs: 0,
-              sm: 0,
+              xs: 125,
             },
           }}
         >
@@ -55,7 +53,31 @@ export const TransactionCard = (props: TransactionCardProps) => {
             )}
           </FTTypography>
           <FTTypography>{props.transaction.transactionNotes}</FTTypography>
-        </FTGridItem>
+        </Grid>
+        <Grid size={{ xs: 6, sm: 12 }}>
+          <Stack direction="column" spacing={1}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ justifyContent: "center" }}
+            >
+              <FTIconButton
+                aria-label="Edit"
+                onClick={() => props.onSelectTransaction(props.transaction)}
+              >
+                <EditIcon style={{ color: "cornflowerblue" }} />
+              </FTIconButton>
+              <FTIconButton
+                aria-label="Delete"
+                onClick={() => {
+                  props.onDeleteTransaction(props.transaction.transactionId);
+                }}
+              >
+                <DeleteIcon style={{ color: "red" }} />
+              </FTIconButton>
+            </Stack>
+          </Stack>
+        </Grid>
       </FTGrid>
     </FTCard>
   );

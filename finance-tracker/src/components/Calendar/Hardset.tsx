@@ -8,11 +8,12 @@ import {
 } from "@mui/material";
 import { FabSaveCancel } from "../Common/FabSaveCancel";
 import { FTGrid } from "../Common/FTGrid";
-import { FTGridItem } from "../Common/FTGridItem";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
-import { FTInput } from "../Common/FTInput";
+import { currencyInputProps, FTInput } from "../Common/FTInput";
+import { FTPaper } from "../Common/FTPaper";
+import Grid from "@mui/material/Grid2";
 
 interface HardsetProps {
   onSaveHardset: (date: Date, amount: number) => void;
@@ -22,11 +23,6 @@ interface HardsetProps {
 export const Hardset = (props: HardsetProps) => {
   const [date, setDate] = useState(new Date());
   const [amount, setAmount] = useState(0);
-
-  const currencyInputProps: InputBaseComponentProps = {
-    inputMode: "decimal",
-    style: { textAlign: "right" },
-  };
 
   const handleSave = () => {
     props.onSaveHardset(date, amount);
@@ -38,26 +34,17 @@ export const Hardset = (props: HardsetProps) => {
 
   return (
     <Box>
-      <Paper
-        sx={{
-          borderStyle: "solid",
-          borderWidth: "2px",
-          borderColor: "white",
-          borderRadius: 3,
-          m: 2,
-          padding: 3,
-        }}
-      >
+      <FTPaper>
         <FTGrid>
-          <FTGridItem size={{ xs: 12 }}>
+          <Grid size={{ xs: 12 }}>
             <DatePicker
               slotProps={{ textField: { fullWidth: true } }}
               label="Date"
               value={dayjs(date)}
               onChange={(value) => handleDateChange(value)}
             />
-          </FTGridItem>
-          <FTGridItem size={{ xs: 12 }}>
+          </Grid>
+          <Grid size={{ xs: 12 }}>
             <FormControl fullWidth>
               <InputLabel>Amount</InputLabel>
               <FTInput
@@ -72,9 +59,9 @@ export const Hardset = (props: HardsetProps) => {
                 onChange={(e: any) => setAmount(+e.target.value)}
               />
             </FormControl>
-          </FTGridItem>
+          </Grid>
         </FTGrid>
-      </Paper>
+      </FTPaper>
       <FabSaveCancel
         onSaveClick={handleSave}
         onCancelClick={props.onCancelHardset}

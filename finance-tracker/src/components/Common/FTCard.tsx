@@ -6,6 +6,10 @@ export const FTCard = (props: any) => {
       sx={{
         display: "flex",
         flexDirection: "column",
+        borderWidth: "3px !important",
+        borderStyle: "solid !important",
+        borderColor: "#3a3a3c !important",
+        ...props.sx,
       }}
     >
       {props.children}

@@ -9,6 +9,7 @@ export const FTGrid = (props: any) => {
       justifyContent="space-between"
       sx={{
         p: 1,
+        ...props.sx,
       }}
     >
       {props.children}

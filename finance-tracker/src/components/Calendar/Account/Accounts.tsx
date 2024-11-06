@@ -9,10 +9,17 @@ import { EditAccount } from "./EditAccount";
 
 interface AccountProps {
   onCancelAccount: () => void;
+  onSetAccounts: (accounts: AccountModel[]) => void;
 }
 
 export const Accounts = (props: AccountProps) => {
-  const { loadAccounts, getAccounts } = accountApi();
+  const {
+    loadAccounts,
+    getAccounts,
+    saveAccount,
+    deleteAccount,
+    cloneAccount,
+  } = accountApi();
   const [accounts, setAccounts] = useState<AccountModel[]>([]);
   const [clearSearch, setClearSearch] = useState(false);
   const [accountCount, setAccountCount] = useState<number>(0);
@@ -28,6 +35,7 @@ export const Accounts = (props: AccountProps) => {
     if (!!response) {
       setAccounts(response.accounts);
       setAccountCount(response.count);
+      props.onSetAccounts(response.accounts);
     }
   };
 
@@ -37,6 +45,7 @@ export const Accounts = (props: AccountProps) => {
     if (!!response) {
       setAccounts(response.accounts);
       setAccountCount(response.count);
+      props.onSetAccounts(response.accounts);
     }
   };
 
@@ -44,14 +53,44 @@ export const Accounts = (props: AccountProps) => {
     load();
   }, []);
 
+  const handleSelectAccount = (account: AccountModel) => {
+    setEditing({ show: true, editingAccount: account });
+  };
+
   const handleAccountAdd = () => {
     setEditing({ show: true, editingAccount: defaultAccount() });
   };
 
-  const handleAccountSave = () => {};
+  const handleAccountSave = async (account: AccountModel) => {
+    const updatedAccount = await saveAccount(account);
+    console.log(updatedAccount);
+
+    if (updatedAccount != null) {
+      await get(0, "");
+      handleCancelAccountEdit();
+    }
+  };
 
   const handleCancelAccountEdit = () => {
     setEditing({ show: false, editingAccount: defaultAccount() });
+  };
+
+  const handleDeleteAccount = async (accountId: number) => {
+    setClearSearch((prev) => !prev);
+    const success = await deleteAccount(accountId);
+
+    if (success) {
+      await get(0, "");
+    }
+  };
+
+  const handleCloneAccount = async (accountId: number) => {
+    setClearSearch((prev) => !prev);
+    const success = await cloneAccount(accountId);
+
+    if (success) {
+      await get(0, "");
+    }
   };
 
   const sxBody = {
@@ -62,6 +101,7 @@ export const Accounts = (props: AccountProps) => {
     <EditAccount
       account={editing.editingAccount}
       onCancelEditAccount={handleCancelAccountEdit}
+      onAccountSave={handleAccountSave}
     />
   );
 
@@ -74,9 +114,19 @@ export const Accounts = (props: AccountProps) => {
         take={take}
       >
         {accounts.map((account: AccountModel) => (
-          <AccountCard key={account.accountId} account={account} />
+          <AccountCard
+            key={account.accountId}
+            account={account}
+            onSelectAccount={handleSelectAccount}
+            onDeleteAccount={handleDeleteAccount}
+            onCloneAccount={handleCloneAccount}
+          />
         ))}
       </List>
+      <FabAddCancel
+        onAddClick={handleAccountAdd}
+        onCancelClick={props.onCancelAccount}
+      />
     </div>
   );
 
@@ -84,10 +134,6 @@ export const Accounts = (props: AccountProps) => {
     <>
       {body}
       {editAccountView}
-      <FabAddCancel
-        onAddClick={handleAccountAdd}
-        onCancelClick={props.onCancelAccount}
-      />
     </>
   );
 };

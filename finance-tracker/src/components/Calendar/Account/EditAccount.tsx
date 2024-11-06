@@ -1,14 +1,16 @@
 import { Box, Paper, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { FTGrid } from "../../Common/FTGrid";
-import { FTGridItem } from "../../Common/FTGridItem";
+import Grid from "@mui/material/Grid2";
 import { AccountModel } from "../../../models/AccountModel";
 import { useState } from "react";
 import { FTTextField } from "../../Common/FTTextField";
 import { FabSaveCancel } from "../../Common/FabSaveCancel";
+import { FTPaper } from "../../Common/FTPaper";
 
 interface EditAccountProps {
   account: AccountModel;
   onCancelEditAccount: () => void;
+  onAccountSave: (account: AccountModel) => void;
 }
 
 export const EditAccount = (props: EditAccountProps) => {
@@ -28,22 +30,16 @@ export const EditAccount = (props: EditAccountProps) => {
     setAccount(updatedAccount);
   };
 
-  const handleAccountSave = () => {};
+  const handleAccountSave = () => {
+    const saveData: AccountModel = { ...account };
+    props.onAccountSave(saveData);
+  };
 
   return (
     <Box>
-      <Paper
-        sx={{
-          borderStyle: "solid",
-          borderWidth: "2px",
-          borderColor: "white",
-          borderRadius: 3,
-          m: 2,
-          padding: 3,
-        }}
-      >
+      <FTPaper>
         <FTGrid>
-          <FTGridItem size={{ xs: 12 }}>
+          <Grid size={{ xs: 12 }}>
             <FTTextField
               fullWidth
               name="accountName"
@@ -51,8 +47,8 @@ export const EditAccount = (props: EditAccountProps) => {
               defaultValue={account.accountName}
               onChange={handleChange}
             />
-          </FTGridItem>
-          <FTGridItem size={{ xs: 12 }}>
+          </Grid>
+          <Grid size={{ xs: 12 }}>
             <ToggleButtonGroup
               color="primary"
               exclusive
@@ -63,9 +59,9 @@ export const EditAccount = (props: EditAccountProps) => {
               <ToggleButton value={0}>Not Default</ToggleButton>
               <ToggleButton value={1}>Default</ToggleButton>
             </ToggleButtonGroup>
-          </FTGridItem>
+          </Grid>
         </FTGrid>
-      </Paper>
+      </FTPaper>
       <FabSaveCancel
         onSaveClick={handleAccountSave}
         onCancelClick={props.onCancelEditAccount}

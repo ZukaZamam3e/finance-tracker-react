@@ -138,7 +138,10 @@ export const Calendar = () => {
   );
 
   const accountsView = viewAccounts && (
-    <Accounts onCancelAccount={handleCancelAccount} />
+    <Accounts
+      onCancelAccount={handleCancelAccount}
+      onSetAccounts={setAccounts}
+    />
   );
 
   const sxBody = {

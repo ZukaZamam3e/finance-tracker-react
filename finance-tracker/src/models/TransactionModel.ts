@@ -14,3 +14,17 @@ export interface TransactionModel {
   offsetDate?: Date;
   offsetAmount?: number;
 }
+
+export const defaultTransaction = () => {
+  const transaction: TransactionModel = {
+    transactionId: -1,
+    accountId: -1,
+    userId: -1,
+    startDate: new Date(),
+    amount: 0,
+    name: "",
+    frequencyTypeId: -1,
+    offsetDate: new Date(),
+  };
+  return transaction;
+};

@@ -81,7 +81,7 @@ export const accountApi = () => {
   const cloneAccount = async (accountId: number) => {
     let data: AccountModel | null = null;
     await postData(
-      `${protectedResources.oaprojectsApi.accountEndpoint}/addnextepisode`,
+      `${protectedResources.oaprojectsApi.accountEndpoint}/cloneaccount`,
       { accountId }
     ).then(async (json) => {
       if (json.errors.length == 0) {
