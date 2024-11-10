@@ -92,7 +92,6 @@ export const List = (props: ListProps) => {
     <>
       <Box
         sx={{
-          width: "100vw",
           pr: "15px",
           pl: "15px",
         }}

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { accountApi } from "../../../api/accountApi";
 import { FabAddCancel } from "../../Common/FabAddCancel";
 import { AccountModel, defaultAccount } from "../../../models/AccountModel";
-import { Box } from "@mui/material";
 import { List } from "../../Common/List";
 import { AccountCard } from "./AccountCard";
 import { EditAccount } from "./EditAccount";

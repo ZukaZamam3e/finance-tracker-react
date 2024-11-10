@@ -11,8 +11,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 interface TransactionCardProps {
   transaction: TransactionModel;
+  selectedDate: Date;
   onSelectTransaction: (transaction: TransactionModel) => void;
-  onDeleteTransaction: (transactionId: number) => void;
+  onDeleteTransaction: (transactionId: number, selectedDate: Date) => void;
 }
 
 export const TransactionCard = (props: TransactionCardProps) => {
@@ -53,6 +54,7 @@ export const TransactionCard = (props: TransactionCardProps) => {
             )}
           </FTTypography>
           <FTTypography>{props.transaction.transactionNotes}</FTTypography>
+          <FTTypography>{props.transaction.categories}</FTTypography>
         </Grid>
         <Grid size={{ xs: 6, sm: 12 }}>
           <Stack direction="column" spacing={1}>
@@ -70,7 +72,10 @@ export const TransactionCard = (props: TransactionCardProps) => {
               <FTIconButton
                 aria-label="Delete"
                 onClick={() => {
-                  props.onDeleteTransaction(props.transaction.transactionId);
+                  props.onDeleteTransaction(
+                    props.transaction.transactionId,
+                    props.selectedDate
+                  );
                 }}
               >
                 <DeleteIcon style={{ color: "red" }} />

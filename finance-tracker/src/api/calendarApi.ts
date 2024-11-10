@@ -1,6 +1,7 @@
 import { protectedResources } from "../config/apiConfig";
 import { useFetch } from "../hooks/useFetchOAProjectsAPI";
 import { DayModel } from "../models/DayModel";
+import { MonthlyTransactionModel } from "../models/MonthlyTransactionModel";
 import {
   defaultGetFinancesResponse,
   GetFinancesResponse,
@@ -62,12 +63,34 @@ export const calendarApi = () => {
     };
   };
 
-  const saveTransaction = async (transaction: TransactionModel) => {
-    let data: TransactionModel | null = null;
+  const getMonthlyTransactions = async (
+    accountId: number,
+    selectedDate: Date
+  ) => {
+    let response: MonthlyTransactionModel[] | null = null;
 
+    await getData(
+      `${protectedResources.oaprojectsApi.calendarEndpoint}/getmonthlytransactions?accountId=${accountId}&selectedDate=${selectedDate.toISOString()}`
+    ).then((json) => {
+      if (json.errors.length == 0) {
+        response = json.model;
+      }
+    });
+
+    return {
+      response,
+    };
+  };
+
+  const saveTransaction = async (
+    accountId: number,
+    selectedDate: Date,
+    transaction: TransactionModel
+  ) => {
+    let data: TransactionModel | null = null;
     await postData(
       `${protectedResources.oaprojectsApi.calendarEndpoint}/savetransaction`,
-      transaction
+      { accountId, selectedDate, transaction }
     ).then(async (json) => {
       if (json.errors.length == 0) {
         data = json.model;
@@ -82,7 +105,7 @@ export const calendarApi = () => {
     accountId: number
   ) => {
     let success: boolean = false;
-
+    console.log(accountId);
     await postData(
       `${protectedResources.oaprojectsApi.calendarEndpoint}/deletetransaction`,
       {
@@ -121,6 +144,7 @@ export const calendarApi = () => {
     loadCalendar,
     getFinances,
     getFinancesOnDay,
+    getMonthlyTransactions,
     saveTransaction,
     deleteTransaction,
     saveHardset,

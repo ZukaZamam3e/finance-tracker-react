@@ -23,13 +23,13 @@ export const BackwardForward = (props: BackwardForwardProps) => {
   };
   const sxBorder = { border: "3px solid rgb(58, 58, 60)" };
   const sxBackward = {
-    gridColumn: "span 2",
+    gridColumn: "span 3",
     ...sxBorder,
     ...sxHeight,
     ...sxDisplay,
   };
   const sxForward = {
-    gridColumn: "span 2",
+    gridColumn: "span 3",
     ...sxBorder,
     ...sxHeight,
     ...sxDisplay,

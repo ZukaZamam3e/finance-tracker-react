@@ -13,14 +13,15 @@ export interface TransactionModel {
   interval?: number;
   offsetDate?: Date;
   offsetAmount?: number;
+  categories?: string;
 }
 
-export const defaultTransaction = () => {
+export const defaultTransaction = (startDate?: Date) => {
   const transaction: TransactionModel = {
     transactionId: -1,
     accountId: -1,
     userId: -1,
-    startDate: new Date(),
+    startDate: startDate ?? new Date(),
     amount: 0,
     name: "",
     frequencyTypeId: -1,

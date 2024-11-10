@@ -10,11 +10,19 @@ import {
 } from "../../models/TransactionModel";
 import { TransactionCard } from "./TransactionCard";
 import { EditTransaction } from "./EditTransaction";
+import { CodeValueModel } from "../../models/CodeValueModel";
+import { calendarApi } from "../../api/calendarApi";
 
 interface DayProps {
   day: DayModel;
+  frequencyTypeIds: CodeValueModel[];
   onCancelDay: () => void;
   largeView?: boolean;
+  onSaveTransaction: (
+    transaction: TransactionModel,
+    selectedDate: Date
+  ) => void;
+  onDeleteTransaction: (transactionId: number, selectedDate: Date) => void;
 }
 
 export const Day = (props: DayProps) => {
@@ -26,16 +34,15 @@ export const Day = (props: DayProps) => {
   const take = 18;
 
   const handleAddNewTransaction = () => {
-    setEditing({ show: true, editingTransaction: defaultTransaction() });
+    setEditing({
+      show: true,
+      editingTransaction: defaultTransaction(props.day.date),
+    });
   };
 
   const handleSelectTransaction = (transaction: TransactionModel) => {
     setEditing({ show: true, editingTransaction: transaction });
   };
-
-  const handleTransactionSave = () => {};
-
-  const handleDeleteTransaction = () => {};
 
   const handleCancelTransactionEdit = () => {
     setEditing({ show: false, editingTransaction: defaultTransaction() });
@@ -69,11 +76,24 @@ export const Day = (props: DayProps) => {
     gridColumn: { xs: "span 3", sm: "span 1" },
   };
 
+  const handleSaveTransaction = async (transaction: TransactionModel) => {
+    const updatedTransaction = props.onSaveTransaction(
+      transaction,
+      props.day.date
+    );
+
+    if (updatedTransaction != null) {
+      handleCancelTransactionEdit();
+    }
+  };
+
   const editTransactionView = editing.show && (
     <EditTransaction
       transaction={editing.editingTransaction}
+      frequencyTypeIds={props.frequencyTypeIds}
+      selectedDate={props.day.date}
       onCancelEditTransaction={handleCancelTransactionEdit}
-      onTransactionSave={handleTransactionSave}
+      onTransactionSave={handleSaveTransaction}
     />
   );
 
@@ -99,9 +119,11 @@ export const Day = (props: DayProps) => {
             >
               {hardset.map((transaction: TransactionModel) => (
                 <TransactionCard
+                  key={transaction.transactionId}
                   transaction={transaction}
+                  selectedDate={props.day.date}
                   onSelectTransaction={handleSelectTransaction}
-                  onDeleteTransaction={handleDeleteTransaction}
+                  onDeleteTransaction={props.onDeleteTransaction}
                 />
               ))}
             </List>
@@ -120,9 +142,11 @@ export const Day = (props: DayProps) => {
             >
               {income.map((transaction: TransactionModel) => (
                 <TransactionCard
+                  key={transaction.transactionId}
                   transaction={transaction}
+                  selectedDate={props.day.date}
                   onSelectTransaction={handleSelectTransaction}
-                  onDeleteTransaction={handleDeleteTransaction}
+                  onDeleteTransaction={props.onDeleteTransaction}
                 />
               ))}
             </List>
@@ -140,9 +164,11 @@ export const Day = (props: DayProps) => {
             >
               {expenses.map((transaction: TransactionModel) => (
                 <TransactionCard
+                  key={transaction.transactionId}
                   transaction={transaction}
+                  selectedDate={props.day.date}
                   onSelectTransaction={handleSelectTransaction}
-                  onDeleteTransaction={handleDeleteTransaction}
+                  onDeleteTransaction={props.onDeleteTransaction}
                 />
               ))}
             </List>

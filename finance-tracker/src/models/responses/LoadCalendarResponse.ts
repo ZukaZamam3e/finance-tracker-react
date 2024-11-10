@@ -1,4 +1,5 @@
 import { AccountModel } from "../AccountModel";
+import { CodeValueModel } from "../CodeValueModel";
 import { DayModel, defaultDay } from "../DayModel";
 
 export interface LoadCalendarResponse {
@@ -12,10 +13,11 @@ export interface LoadCalendarResponse {
   lowestDay: DayModel;
   days: DayModel[];
   accounts: AccountModel[];
+  frequencyTypeIds: CodeValueModel[];
 }
 
 export const defaultLoadCalendarResponse = () => {
-  return {
+  const response: LoadCalendarResponse = {
     accountId: -1,
     month: -1,
     monthYear: "",
@@ -26,5 +28,8 @@ export const defaultLoadCalendarResponse = () => {
     lowestDay: defaultDay(),
     days: [],
     accounts: [],
+    frequencyTypeIds: [],
   };
+
+  return response;
 };
