@@ -17,7 +17,7 @@ export const NavigationBar = () => {
           sx={{ flexGrow: 1 }}
           onClick={() => navigate("/")}
         >
-          Finance Trackera
+          Finance Tracker
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
         <Box sx={{ position: "absolute", right: "5px" }}>
