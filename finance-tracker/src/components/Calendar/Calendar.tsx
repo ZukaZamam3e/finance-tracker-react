@@ -266,14 +266,18 @@ export const Calendar = () => {
 
   const monthView = viewMonth && (
     <Month
-      onCancelMonth={handleCancelMonth}
       accountId={accountId}
       selectedDate={date}
+      onCancelMonth={handleCancelMonth}
     />
   );
 
   const categoriesView = viewCategories && (
-    <Categories onCancelCategories={handleCancelCategories} />
+    <Categories
+      accountId={accountId}
+      selectedDate={date}
+      onCancelCategories={handleCancelCategories}
+    />
   );
 
   const sxBody = {

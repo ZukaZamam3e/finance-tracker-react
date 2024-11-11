@@ -4,6 +4,7 @@ export const DaysOfWeek = () => {
   const sxBorder = {
     border: "solid rgb(58, 58, 60)",
     borderWidth: { xs: "1px", md: "3px" },
+    borderBottomWidth: { xs: "0px", md: "3px" },
     borderRadius: { xs: "1px", md: "3px" },
     mr: "-1px",
     mt: "-1px",

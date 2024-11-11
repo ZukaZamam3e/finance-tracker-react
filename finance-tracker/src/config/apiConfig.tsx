@@ -5,5 +5,7 @@ export const protectedResources = {
       import.meta.env.VITE_APP_API_URL + "/finance-tracker/calendar",
     accountEndpoint:
       import.meta.env.VITE_APP_API_URL + "/finance-tracker/account",
+    transactionEndpoint:
+      import.meta.env.VITE_APP_API_URL + "/finance-tracker/fttransaction",
   },
 };

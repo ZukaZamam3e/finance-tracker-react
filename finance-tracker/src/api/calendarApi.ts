@@ -1,5 +1,6 @@
 import { protectedResources } from "../config/apiConfig";
 import { useFetch } from "../hooks/useFetchOAProjectsAPI";
+import { CategoryModel } from "../models/CategoryModel";
 import { DayModel } from "../models/DayModel";
 import { MonthlyTransactionModel } from "../models/MonthlyTransactionModel";
 import {
@@ -82,6 +83,22 @@ export const calendarApi = () => {
     };
   };
 
+  const getCategories = async (accountId: number, selectedDate: Date) => {
+    let response: CategoryModel[] | null = null;
+
+    await getData(
+      `${protectedResources.oaprojectsApi.calendarEndpoint}/getcategories?accountId=${accountId}&selectedDate=${selectedDate.toISOString()}`
+    ).then((json) => {
+      if (json.errors.length == 0) {
+        response = json.model;
+      }
+    });
+
+    return {
+      response,
+    };
+  };
+
   const saveTransaction = async (
     accountId: number,
     selectedDate: Date,
@@ -145,6 +162,7 @@ export const calendarApi = () => {
     getFinances,
     getFinancesOnDay,
     getMonthlyTransactions,
+    getCategories,
     saveTransaction,
     deleteTransaction,
     saveHardset,

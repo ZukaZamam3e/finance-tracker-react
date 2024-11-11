@@ -8,12 +8,14 @@ import { FTIconButton } from "../../Common/FTIconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 interface AccountCardProps {
   account: AccountModel;
   onSelectAccount: (account: AccountModel) => void;
   onDeleteAccount: (accountId: number) => void;
   onCloneAccount: (accountId: number) => void;
+  onViewTransactions: (accoutnId: number) => void;
 }
 
 export const AccountCard = (props: AccountCardProps) => {
@@ -54,13 +56,27 @@ export const AccountCard = (props: AccountCardProps) => {
               >
                 <DeleteIcon style={{ color: "red" }} />
               </FTIconButton>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ justifyContent: "center" }}
+            >
               <FTIconButton
-                aria-label="Delete"
+                aria-label="Clone"
                 onClick={() => {
                   props.onCloneAccount(props.account.accountId);
                 }}
               >
                 <ContentCopyIcon style={{ color: "yellow" }} />
+              </FTIconButton>
+              <FTIconButton
+                aria-label="Transactions"
+                onClick={() => {
+                  props.onViewTransactions(props.account.accountId);
+                }}
+              >
+                <AttachMoneyIcon style={{ color: "green" }} />
               </FTIconButton>
             </Stack>
           </Stack>

@@ -5,6 +5,7 @@ import { AccountModel, defaultAccount } from "../../../models/AccountModel";
 import { List } from "../../Common/List";
 import { AccountCard } from "./AccountCard";
 import { EditAccount } from "./EditAccount";
+import { Transactions } from "./Transactions/Transactions";
 
 interface AccountProps {
   onCancelAccount: () => void;
@@ -22,6 +23,7 @@ export const Accounts = (props: AccountProps) => {
   const [accounts, setAccounts] = useState<AccountModel[]>([]);
   const [clearSearch, setClearSearch] = useState(false);
   const [accountCount, setAccountCount] = useState<number>(0);
+  const [accountTransactionId, setAccountTransactionId] = useState<number>(0);
   const [editing, setEditing] = useState({
     show: false,
     editingAccount: defaultAccount(),
@@ -92,8 +94,16 @@ export const Accounts = (props: AccountProps) => {
     }
   };
 
+  const handleViewTransactions = (accountId: number) => {
+    setAccountTransactionId(accountId);
+  };
+
+  const handleCancelTransactions = () => {
+    setAccountTransactionId(0);
+  };
+
   const sxBody = {
-    display: !editing.show ? "initial" : "none",
+    display: !editing.show && accountTransactionId == 0 ? "initial" : "none",
   };
 
   const editAccountView = editing.show && (
@@ -101,6 +111,13 @@ export const Accounts = (props: AccountProps) => {
       account={editing.editingAccount}
       onCancelEditAccount={handleCancelAccountEdit}
       onAccountSave={handleAccountSave}
+    />
+  );
+
+  const accountTransactionsView = accountTransactionId != 0 && (
+    <Transactions
+      accountId={accountTransactionId}
+      onCancelTransactions={handleCancelTransactions}
     />
   );
 
@@ -119,6 +136,7 @@ export const Accounts = (props: AccountProps) => {
             onSelectAccount={handleSelectAccount}
             onDeleteAccount={handleDeleteAccount}
             onCloneAccount={handleCloneAccount}
+            onViewTransactions={handleViewTransactions}
           />
         ))}
       </List>
@@ -133,6 +151,7 @@ export const Accounts = (props: AccountProps) => {
     <>
       {body}
       {editAccountView}
+      {accountTransactionsView}
     </>
   );
 };

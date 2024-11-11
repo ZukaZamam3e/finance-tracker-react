@@ -64,7 +64,7 @@ export const Month = (props: MonthProps) => {
 
 const Header = () => {
   const sxBorder = {
-    border: "solid rgb(58, 58, 60)",
+    borderBottom: "solid rgb(58, 58, 60)",
     borderWidth: { xs: "1px", sm: "3px" },
   };
   const sxTransactionName = { gridColumn: "span 2", ...sxBorder };

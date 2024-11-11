@@ -38,7 +38,22 @@ export const ManageAccount = (props: ManageAccountProps) => {
     alignItems: "center",
   };
   const sxBorder = { border: "3px solid rgb(58, 58, 60)" };
-  const sxAccounts = { gridColumn: "span 3", ...sxBorder, ...sxHeight };
+  const sxAccounts = {
+    gridColumn: "span 3",
+    ...sxBorder,
+    ...sxHeight,
+    "&.MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderWidth: "0px",
+      },
+      "&:hover fieldset": {
+        borderWidth: "0px",
+      },
+      "&.Mui-focused fieldset": {
+        borderWidth: "0px",
+      },
+    },
+  };
   const sxAccountList = { gridColumn: "span 1", ...sxBorder, ...sxHeight };
   const sxMonthView = { gridColumn: "span 1", ...sxBorder, ...sxHeight };
   const sxCategoryView = { gridColumn: "span 1", ...sxBorder, ...sxHeight };

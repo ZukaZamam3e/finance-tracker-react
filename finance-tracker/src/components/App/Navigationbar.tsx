@@ -18,8 +18,9 @@ export const NavigationBar = () => {
 
   const navigate = useNavigate();
   return (
-    <AppBar position="fixed" sx={{ alignItems: "center" }}>
+    <AppBar position="fixed">
       <Toolbar variant="dense">
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
         <Typography
           variant="h6"
           sx={{ flexGrow: 1 }}
@@ -28,8 +29,9 @@ export const NavigationBar = () => {
           Finance Tracker
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
-
-        {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
+        <Box sx={{ position: "absolute", right: "5px" }}>
+          {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
+        </Box>
       </Toolbar>
     </AppBar>
   );
