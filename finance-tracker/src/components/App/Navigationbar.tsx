@@ -1,14 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { LoginButton } from "./LoginButton";
 import { LogoutButton } from "./LogoutButton";

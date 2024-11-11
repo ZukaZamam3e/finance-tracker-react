@@ -36,7 +36,7 @@ export const FTTab = (props: FTTabProps) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const isMobile = useSelector((state: any) => state.isMobile.value);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
     if (!!props.onTabChange) {
       props.onTabChange();

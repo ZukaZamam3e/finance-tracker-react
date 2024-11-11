@@ -9,7 +9,6 @@ import {
   defaultLoadTransactionResponse,
   LoadTransactionResponse,
 } from "../models/responses/LoadTransactionResponse";
-import { TransactionViewModel } from "../models/TransactionViewModel";
 
 export const transactionApi = () => {
   const { getData, postData } = useFetch();

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { transactionApi } from "../../../../api/transactionApi";
 import { TransactionViewModel } from "../../../../models/TransactionViewModel";
 import { FabCancel } from "../../../Common/FabCancel";
-import { Box } from "@mui/material";
 import { List } from "../../../Common/List";
 import { ViewTransactionCard } from "./ViewTransactionCard";
 

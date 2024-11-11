@@ -8,10 +8,6 @@ import { ManageAccount } from "./ManageAccount";
 import { BackwardForward } from "./BackwardForward";
 import { IncomeExpense } from "./IncomeExpense";
 import { calendarApi } from "../../api/calendarApi";
-import {
-  defaultLoadCalendarResponse,
-  LoadCalendarResponse,
-} from "../../models/responses/LoadCalendarResponse";
 import { DayModel, defaultDay } from "../../models/DayModel";
 import { Hardset } from "./Hardset";
 import { AccountModel } from "../../models/AccountModel";
@@ -29,10 +25,6 @@ export const Calendar = () => {
     saveTransaction,
     deleteTransaction,
   } = calendarApi();
-
-  const [calendarData, setCalendarData] = useState<LoadCalendarResponse>(
-    defaultLoadCalendarResponse()
-  );
 
   const [date, setDate] = useState(
     new Date(
@@ -61,7 +53,6 @@ export const Calendar = () => {
 
   const load = async () => {
     const { response } = await loadCalendar(date);
-    setCalendarData(response);
 
     if (!!response) {
       setAccountId(response.accountId);

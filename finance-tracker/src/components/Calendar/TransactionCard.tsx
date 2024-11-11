@@ -1,4 +1,4 @@
-import { Link, Stack, Typography } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import { TransactionModel } from "../../models/TransactionModel";
 import { FTCard } from "../Common/FTCard";
 import { FTGrid } from "../Common/FTGrid";

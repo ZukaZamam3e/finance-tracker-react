@@ -1,10 +1,4 @@
-import {
-  Button,
-  MenuItem,
-  Paper,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import ListIcon from "@mui/icons-material/List";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import BarChartIcon from "@mui/icons-material/BarChart";
