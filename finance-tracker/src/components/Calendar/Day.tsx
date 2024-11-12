@@ -21,7 +21,7 @@ interface DayProps {
   onSaveTransaction: (
     transaction: TransactionModel,
     selectedDate: Date
-  ) => void;
+  ) => Promise<TransactionModel | null>;
   onDeleteTransaction: (transactionId: number, selectedDate: Date) => void;
 }
 
@@ -77,7 +77,7 @@ export const Day = (props: DayProps) => {
   };
 
   const handleSaveTransaction = async (transaction: TransactionModel) => {
-    const updatedTransaction = props.onSaveTransaction(
+    const updatedTransaction = await props.onSaveTransaction(
       transaction,
       props.day.date
     );

@@ -25,7 +25,6 @@ export const defaultTransaction = (startDate?: Date) => {
     amount: 0,
     name: "",
     frequencyTypeId: -1,
-    offsetDate: new Date(),
   };
   return transaction;
 };
