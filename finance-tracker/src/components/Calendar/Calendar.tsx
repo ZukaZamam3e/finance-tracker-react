@@ -27,11 +27,7 @@ export const Calendar = () => {
   } = calendarApi();
 
   const [date, setDate] = useState(
-    new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      new Date().getDate()
-    )
+    new Date(new Date().getFullYear(), new Date().getMonth(), 1)
   );
   const [selectedDay, setSelectedDay] = useState<DayModel | null>(null);
   const [viewHardset, setViewHardset] = useState(false);
@@ -137,7 +133,11 @@ export const Calendar = () => {
   };
 
   const handleCurrent = async () => {
-    const updatedDate = new Date();
+    const updatedDate = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1
+    );
     setDate(updatedDate);
   };
 
