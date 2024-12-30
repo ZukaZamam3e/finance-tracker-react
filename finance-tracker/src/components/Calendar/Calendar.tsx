@@ -331,7 +331,11 @@ export const Calendar = () => {
       </div>
       <Box sx={days_grid}>
         <DaysOfWeek />
-        <Days onSelectDay={handleSelectDay} days={days} />
+        <Days
+          onSelectDay={handleSelectDay}
+          days={days}
+          currentMonth={date.getMonth()}
+        />
       </Box>
       <Box sx={total_grid}>
         <IncomeExpense

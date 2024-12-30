@@ -5,9 +5,11 @@ interface DayCardProps {
   day: DayModel;
   onSelectDay?: (day: DayModel) => void;
   largeView?: boolean;
+  border: boolean;
 }
 
 export const DayCard = (props: DayCardProps) => {
+  console.log("border", props.border);
   const largeView = props.largeView ?? false;
   const today = new Date();
   const month = new Date(props.day.date).getMonth();
@@ -35,12 +37,18 @@ export const DayCard = (props: DayCardProps) => {
     border: "solid rgb(102, 255, 0)",
   };
 
+  const sxMonthBorder = {
+    border: "solid rgb(134, 238, 238)",
+  };
+
   const sxDayBorder =
     currentYear && currentMonth && currentDay
       ? sxTodayBorder
       : currentYear && currentMonth && !currentDay
         ? sxMonthDayBorder
-        : sxNonMonthDayBorder;
+        : props.border
+          ? sxMonthBorder
+          : sxNonMonthDayBorder;
 
   const sxDay = {
     display: "flex",

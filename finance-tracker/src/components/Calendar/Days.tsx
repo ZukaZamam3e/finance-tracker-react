@@ -3,6 +3,7 @@ import { DayCard } from "./DayCard";
 
 interface DaysProps {
   days: DayModel[];
+  currentMonth: number;
   onSelectDay: (day: DayModel) => void;
 }
 
@@ -16,6 +17,11 @@ export const Days = (props: DaysProps) => {
   }
 
   return props.days.map((day) => (
-    <DayCard key={day.dateZ} day={day} onSelectDay={props.onSelectDay} />
+    <DayCard
+      key={day.dateZ}
+      day={day}
+      onSelectDay={props.onSelectDay}
+      border={new Date(day.date).getMonth() == props.currentMonth}
+    />
   ));
 };
