@@ -5,11 +5,10 @@ interface DayCardProps {
   day: DayModel;
   onSelectDay?: (day: DayModel) => void;
   largeView?: boolean;
-  border: boolean;
+  border?: boolean;
 }
 
 export const DayCard = (props: DayCardProps) => {
-  console.log("border", props.border);
   const largeView = props.largeView ?? false;
   const today = new Date();
   const month = new Date(props.day.date).getMonth();

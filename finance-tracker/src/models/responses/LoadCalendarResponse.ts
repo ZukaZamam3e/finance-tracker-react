@@ -14,6 +14,7 @@ export interface LoadCalendarResponse {
   days: DayModel[];
   accounts: AccountModel[];
   frequencyTypeIds: CodeValueModel[];
+  conditionals: CodeValueModel[];
 }
 
 export const defaultLoadCalendarResponse = () => {
@@ -29,6 +30,7 @@ export const defaultLoadCalendarResponse = () => {
     days: [],
     accounts: [],
     frequencyTypeIds: [],
+    conditionals: [],
   };
 
   return response;

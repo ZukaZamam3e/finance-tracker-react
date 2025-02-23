@@ -45,6 +45,7 @@ export const Calendar = () => {
   const [frequencyTypeIds, setFrequencyTypeIds] = useState<CodeValueModel[]>(
     []
   );
+  const [conditionals, setConditionals] = useState<CodeValueModel[]>([]);
   const showAccounts = false;
 
   const load = async () => {
@@ -79,6 +80,7 @@ export const Calendar = () => {
       setAccounts(response.accounts);
       setAccountId(response.accountId);
       setFrequencyTypeIds(response.frequencyTypeIds);
+      setConditionals(response.conditionals);
     }
   };
 
@@ -234,6 +236,7 @@ export const Calendar = () => {
     <Day
       day={selectedDay}
       frequencyTypeIds={frequencyTypeIds}
+      conditionals={conditionals}
       onCancelDay={handleCancelDay}
       largeView={true}
       onDeleteTransaction={handleDeleteTransaction}

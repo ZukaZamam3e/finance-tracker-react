@@ -14,6 +14,9 @@ export interface TransactionModel {
   offsetDate?: Date;
   offsetAmount?: number;
   categories?: string;
+  conditional?: number;
+  conditionalZ?: string;
+  conditionalAmount?: number;
 }
 
 export const defaultTransaction = (startDate?: Date) => {

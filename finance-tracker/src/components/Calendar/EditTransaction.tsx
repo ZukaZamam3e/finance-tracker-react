@@ -27,6 +27,7 @@ interface EditTransactionProps {
   transaction: TransactionModel;
   offset?: TransactionOffsetModel;
   frequencyTypeIds: CodeValueModel[];
+  conditionals: CodeValueModel[];
   selectedDate: Date;
   onCancelEditTransaction: () => void;
   onTransactionSave: (transaction: TransactionModel) => void;
@@ -100,10 +101,23 @@ export const EditTransaction = (props: EditTransactionProps) => {
     setTransaction(updatedTransaction);
   };
 
+  const handleConditionalChange = (event: SelectChangeEvent) => {
+    setTransaction({
+      ...transaction,
+      ["conditional"]: parseInt(event.target.value),
+    });
+  };
+
   const handleTransactionSave = () => {
     const saveData: TransactionModel = { ...transaction };
     props.onTransactionSave(saveData);
   };
+
+  const showInterval =
+    transaction.frequencyTypeId == 1009 ||
+    transaction.frequencyTypeId == 1019 ||
+    transaction.frequencyTypeId == 1011;
+
   return (
     <Box>
       <FTPaper>
@@ -172,7 +186,7 @@ export const EditTransaction = (props: EditTransactionProps) => {
                 onChange={handleFrequencyTypeChange}
                 label="Frequency"
               >
-                <MenuItem value="0">Select Account</MenuItem>
+                <MenuItem value="0">Select Frequency</MenuItem>
                 {props.frequencyTypeIds.map((item) => (
                   <MenuItem key={item.codeValueId} value={item.codeValueId}>
                     {item.decodeTxt}
@@ -181,6 +195,19 @@ export const EditTransaction = (props: EditTransactionProps) => {
               </Select>
             </FormControl>
           </Grid>
+          {showInterval && (
+            <Grid size={{ xs: 12 }}>
+              <FTTextField
+                fullWidth
+                name="interval"
+                label="Interval"
+                type="number"
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                value={props.transaction.interval}
+                onChange={(e: any) => handleChange(e)}
+              />
+            </Grid>
+          )}
           <Grid size={{ xs: 12 }}>
             <FTTextField
               fullWidth
@@ -239,15 +266,64 @@ export const EditTransaction = (props: EditTransactionProps) => {
                   <IsoIcon style={{ color: "white" }} />
                 </FTIconButton>
               </Grid>
-              <Grid size={{ xs: 12 }}>
-                <FTTextField
-                  fullWidth
-                  name="categories"
-                  label="Categories"
-                  multiline
-                  defaultValue={transaction.categories}
-                  onChange={handleChange}
-                />
+            </Grid>
+          </Grid>
+          <Grid size={{ xs: 12 }}>
+            <FTTextField
+              fullWidth
+              name="categories"
+              label="Categories"
+              multiline
+              defaultValue={transaction.categories}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid size={{ xs: 12 }}>
+            <FormControl fullWidth>
+              <InputLabel>Conditional</InputLabel>
+              <Select
+                value={`${transaction.conditional}`}
+                displayEmpty
+                fullWidth
+                sx={{ textAlign: "left" }}
+                onChange={handleConditionalChange}
+                label="Conditional"
+              >
+                <MenuItem value="null">Select Conditional</MenuItem>
+                {props.conditionals.map((item) => (
+                  <MenuItem key={item.codeValueId} value={item.codeValueId}>
+                    {item.decodeTxt}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12 }}>
+            <Grid container spacing={3}>
+              <Grid size={{ xs: 10, sm: 11 }}>
+                <FormControl fullWidth>
+                  <InputLabel>Conditional Amount</InputLabel>
+                  <FTInput
+                    inputProps={currencyInputProps}
+                    startAdornment={
+                      <InputAdornment position="start">$</InputAdornment>
+                    }
+                    name="conditionalAmount"
+                    label="Conditional Amount"
+                    type="number"
+                    value={transaction.conditionalAmount}
+                    onChange={(e: any) => handleChange(e)}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid size={{ xs: 2, sm: 1 }}>
+                <FTIconButton
+                  aria-label="Flip"
+                  size="large"
+                  onClick={flipOffsetAmount}
+                >
+                  <IsoIcon style={{ color: "white" }} />
+                </FTIconButton>
               </Grid>
             </Grid>
           </Grid>

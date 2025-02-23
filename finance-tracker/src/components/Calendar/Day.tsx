@@ -16,6 +16,7 @@ import { calendarApi } from "../../api/calendarApi";
 interface DayProps {
   day: DayModel;
   frequencyTypeIds: CodeValueModel[];
+  conditionals: CodeValueModel[];
   onCancelDay: () => void;
   largeView?: boolean;
   onSaveTransaction: (
@@ -91,6 +92,7 @@ export const Day = (props: DayProps) => {
     <EditTransaction
       transaction={editing.editingTransaction}
       frequencyTypeIds={props.frequencyTypeIds}
+      conditionals={props.conditionals}
       selectedDate={props.day.date}
       onCancelEditTransaction={handleCancelTransactionEdit}
       onTransactionSave={handleSaveTransaction}
