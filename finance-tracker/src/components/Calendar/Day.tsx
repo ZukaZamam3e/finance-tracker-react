@@ -12,6 +12,7 @@ import { TransactionCard } from "./TransactionCard";
 import { EditTransaction } from "./EditTransaction";
 import { CodeValueModel } from "../../models/CodeValueModel";
 import { calendarApi } from "../../api/calendarApi";
+import { TransactionDates } from "./TransactionDates";
 
 interface DayProps {
   day: DayModel;
@@ -29,6 +30,10 @@ interface DayProps {
 export const Day = (props: DayProps) => {
   const [hideAddButton, setHideAddButton] = useState(false);
   const [editing, setEditing] = useState({
+    show: false,
+    editingTransaction: defaultTransaction(),
+  });
+  const [showTransactionDates, setShowTransactionDates] = useState({
     show: false,
     editingTransaction: defaultTransaction(),
   });
@@ -59,7 +64,7 @@ export const Day = (props: DayProps) => {
   const expenses = props.day.transactions.filter((m) => m.amount < 0);
 
   const sxBody = {
-    display: !editing.show ? "initial" : "none",
+    display: !editing.show && !showTransactionDates.show ? "initial" : "none",
   };
 
   const sxDayRow = {
@@ -75,6 +80,21 @@ export const Day = (props: DayProps) => {
 
   const sxDay = {
     gridColumn: { xs: "span 3", sm: "span 1" },
+  };
+
+  const handleShowTransactionDates = async (transaction: TransactionModel) => {
+    console.log("test");
+    setShowTransactionDates({
+      show: true,
+      editingTransaction: transaction,
+    });
+  };
+
+  const handleCancelTransactionDates = () => {
+    setShowTransactionDates({
+      show: false,
+      editingTransaction: defaultTransaction(),
+    });
   };
 
   const handleSaveTransaction = async (transaction: TransactionModel) => {
@@ -96,6 +116,15 @@ export const Day = (props: DayProps) => {
       selectedDate={props.day.date}
       onCancelEditTransaction={handleCancelTransactionEdit}
       onTransactionSave={handleSaveTransaction}
+    />
+  );
+
+  const showTransactionDatesView = showTransactionDates.show && (
+    <TransactionDates
+      transaction={showTransactionDates.editingTransaction}
+      day={props.day}
+      largeView={props.largeView}
+      onCancelTransactionDates={handleCancelTransactionDates}
     />
   );
 
@@ -126,6 +155,7 @@ export const Day = (props: DayProps) => {
                   selectedDate={props.day.date}
                   onSelectTransaction={handleSelectTransaction}
                   onDeleteTransaction={props.onDeleteTransaction}
+                  onShowTransactionDates={handleShowTransactionDates}
                 />
               ))}
             </List>
@@ -149,6 +179,7 @@ export const Day = (props: DayProps) => {
                   selectedDate={props.day.date}
                   onSelectTransaction={handleSelectTransaction}
                   onDeleteTransaction={props.onDeleteTransaction}
+                  onShowTransactionDates={handleShowTransactionDates}
                 />
               ))}
             </List>
@@ -171,6 +202,7 @@ export const Day = (props: DayProps) => {
                   selectedDate={props.day.date}
                   onSelectTransaction={handleSelectTransaction}
                   onDeleteTransaction={props.onDeleteTransaction}
+                  onShowTransactionDates={handleShowTransactionDates}
                 />
               ))}
             </List>
@@ -191,6 +223,7 @@ export const Day = (props: DayProps) => {
     <>
       {body}
       {editTransactionView}
+      {showTransactionDatesView}
     </>
   );
 };

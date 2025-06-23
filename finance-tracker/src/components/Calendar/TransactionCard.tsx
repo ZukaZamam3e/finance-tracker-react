@@ -8,12 +8,14 @@ import { FTTypography } from "../Common/FTTypography";
 import { FTIconButton } from "../Common/FTIconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 interface TransactionCardProps {
   transaction: TransactionModel;
   selectedDate: Date;
   onSelectTransaction: (transaction: TransactionModel) => void;
   onDeleteTransaction: (transactionId: number, selectedDate: Date) => void;
+  onShowTransactionDates: (transaction: TransactionModel) => void;
 }
 
 export const TransactionCard = (props: TransactionCardProps) => {
@@ -79,6 +81,22 @@ export const TransactionCard = (props: TransactionCardProps) => {
                 }}
               >
                 <DeleteIcon style={{ color: "red" }} />
+              </FTIconButton>
+            </Stack>
+          </Stack>
+        </Grid>
+        <Grid size={{ xs: 6, sm: 12 }}>
+          <Stack direction="column" spacing={1}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ justifyContent: "center" }}
+            >
+              <FTIconButton
+                aria-label="Show Transaction Dates"
+                onClick={() => props.onShowTransactionDates(props.transaction)}
+              >
+                <CalendarMonthIcon style={{ color: "green" }} />
               </FTIconButton>
             </Stack>
           </Stack>

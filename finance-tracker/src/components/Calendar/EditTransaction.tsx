@@ -115,7 +115,7 @@ export const EditTransaction = (props: EditTransactionProps) => {
 
   const showInterval =
     transaction.frequencyTypeId == 1009 ||
-    transaction.frequencyTypeId == 1019 ||
+    transaction.frequencyTypeId == 1010 ||
     transaction.frequencyTypeId == 1011;
 
   return (
