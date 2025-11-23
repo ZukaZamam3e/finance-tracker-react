@@ -6,4 +6,5 @@ export interface MonthlyTransactionModel {
   income?: number;
   expenses?: number;
   endOfDayBalance?: number;
+  url?: string;
 }

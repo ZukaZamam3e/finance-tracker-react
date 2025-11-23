@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import { formatCurrency } from "../../../models/DayModel";
 import { MonthlyTransactionModel } from "../../../models/MonthlyTransactionModel";
 
@@ -24,7 +24,15 @@ export const MonthTransactionCard = (props: MonthTransactionCardProps) => {
         {props.transaction.transactionDate &&
           new Date(props.transaction.transactionDate).toLocaleDateString()}
       </Box>
-      <Box sx={sxTransactionName}>{props.transaction.transactionName}</Box>
+      <Box sx={sxTransactionName}>
+        {props.transaction.url ? (
+          <Link target="_blank" href={props.transaction.url}>
+            {props.transaction.transactionName}
+          </Link>
+        ) : (
+          <>{props.transaction.transactionName}</>
+        )}
+      </Box>
       <Box sx={sxBorder}>
         {props.transaction.income && formatCurrency(props.transaction.income)}
       </Box>
