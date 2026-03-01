@@ -48,6 +48,8 @@ export const Calendar = () => {
   const [conditionals, setConditionals] = useState<CodeValueModel[]>([]);
   const showAccounts = false;
 
+  const [monthYearOptions, setMonthYearOptions] = useState<string[]>([]);
+
   const load = async () => {
     const { response } = await loadCalendar(date);
 
@@ -81,7 +83,60 @@ export const Calendar = () => {
       setAccountId(response.accountId);
       setFrequencyTypeIds(response.frequencyTypeIds);
       setConditionals(response.conditionals);
+
+      let monthYearOptions: string[] = [];
+
+      if (monthYearOptions.length == 0) {
+        handleAddMonthYearOptions(response.monthYear, 5);
+      }
     }
+  };
+
+  const handleAddMonthYearOptions = (
+    startMonthYear: string,
+    yearsToAdd: number
+  ) => {
+    let monthYears: string[] = [];
+    const startDate = new Date(
+      parseInt(startMonthYear.split(" ")[1]),
+      new Date(`${startMonthYear.split(" ")[0]} 1, 2000`).getMonth(),
+      1
+    );
+
+    for (let i = 0; i <= yearsToAdd * 12; i++) {
+      const date = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth() + i,
+        1
+      );
+      monthYears.push(
+        `${date.toLocaleString("default", { month: "short" })} ${date.getFullYear()}`
+      );
+    }
+
+    const updatedMonthYearOptions = [...monthYearOptions, ...monthYears];
+
+    // distinct lise
+    const distinctMonthYearOptions = updatedMonthYearOptions.filter(
+      (item, index) => updatedMonthYearOptions.indexOf(item) === index
+    );
+
+    // sort by date
+    distinctMonthYearOptions.sort((a, b) => {
+      const dateA = new Date(
+        parseInt(a.split(" ")[1]),
+        new Date(`${a.split(" ")[0]} 1, 2000`).getMonth(),
+        1
+      );
+      const dateB = new Date(
+        parseInt(b.split(" ")[1]),
+        new Date(`${b.split(" ")[0]} 1, 2000`).getMonth(),
+        1
+      );
+      return dateA.getTime() - dateB.getTime();
+    });
+
+    setMonthYearOptions(distinctMonthYearOptions);
   };
 
   const get = async (date: Date, onSelectDay?: (day: DayModel) => void) => {
@@ -112,6 +167,10 @@ export const Calendar = () => {
       setMonthIncome(response.monthIncome);
       setMonthExpenses(response.monthExpenses);
       setAccountId(response.accountId);
+
+      if (monthYearOptions.filter((m) => m == response.monthYear).length == 0) {
+        handleAddMonthYearOptions(response.monthYear, 5);
+      }
 
       if (!!onSelectDay) {
         const day = response.days.filter(
@@ -153,6 +212,16 @@ export const Calendar = () => {
     const updatedDate = new Date(date);
     updatedDate.setMonth(updatedDate.getMonth() + 1);
     setDate(updatedDate);
+  };
+
+  const handleMonthYearChange = (newMonthYear: string) => {
+    setDate(
+      new Date(
+        parseInt(newMonthYear.split(" ")[1]),
+        new Date(`${newMonthYear.split(" ")[0]} 1, 2000`).getMonth(),
+        1
+      )
+    );
   };
 
   const handleOpenHardset = () => {
@@ -330,6 +399,8 @@ export const Calendar = () => {
           onBackward={handleBackward}
           onForward={handleForward}
           monthYear={monthYear}
+          monthYearOptions={monthYearOptions}
+          onMonthYearChange={handleMonthYearChange}
         />
       </div>
       <Box sx={days_grid}>

@@ -1,17 +1,29 @@
-import { Button, Paper } from "@mui/material";
+import {
+  Button,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { DayModel, formatCurrency } from "../../models/DayModel";
 
 interface CalendarHeaderProps {
   monthYear: string;
+  monthYearOptions: string[];
   lowestDay: DayModel;
   onCurrent: () => void;
   onBackward: () => void;
   onForward: () => void;
+  onMonthYearChange: (monthYear: string) => void;
 }
 
 export const CalendarHeader = (props: CalendarHeaderProps) => {
+  const handleMonthYearChange = (event: SelectChangeEvent) => {
+    props.onMonthYearChange(event.target.value);
+  };
+
   const sxHeight = {
     height: "40px",
     display: "flex",
@@ -68,7 +80,18 @@ export const CalendarHeader = (props: CalendarHeaderProps) => {
       <Button sx={sxBackwardForward} onClick={props.onBackward}>
         <ArrowBackIcon />
       </Button>
-      <Paper sx={sxMonthYear}>{props.monthYear}</Paper>
+      <Select
+        sx={sxMonthYear}
+        value={props.monthYear}
+        displayEmpty
+        onChange={handleMonthYearChange}
+      >
+        {props.monthYearOptions.map((item) => (
+          <MenuItem key={item} value={item}>
+            {item}
+          </MenuItem>
+        ))}
+      </Select>
       <Button sx={sxBackwardForward} onClick={props.onForward}>
         <ArrowForwardIcon />
       </Button>
